@@ -1,42 +1,46 @@
 package vn.mikademy.backend.common.dto;
 
+import vn.mikademy.backend.common.response.SuccessCode;
+import lombok.Builder;
 import lombok.Getter;
 
-public final class ApiResponse<T> {
-    @Getter
-    private final boolean success;
-    private final T data;
-    private final String error;
+@Getter
+@Builder
+public class ApiResponse<T> {
 
-    private ApiResponse(boolean success, T data, String error) {
-        this.success = success;
-        this.data = data;
-        this.error = error;
-    }
+    private boolean success;
+    private String code;
+    private String message;
+    private T data;
 
+    // SUCCESS
     public static <T> ApiResponse<T> success(T data) {
-        return new ApiResponse<>(true, data, null);
+        return success(SuccessCode.SUCCESS, data);
     }
 
-    public static <T> ApiResponse<T> failure(String error) {
-        return new ApiResponse<>(false, null, error);
+    public static <T> ApiResponse<T> success(SuccessCode successCode, T data) {
+        return ApiResponse.<T>builder()
+                .success(true)
+                .code(successCode.getCode())
+                .message(successCode.getMessage())
+                .data(data)
+                .build();
     }
 
-    public boolean isFailure() {
-        return !success;
+    public static ApiResponse<Void> success(SuccessCode successCode) {
+        return ApiResponse.<Void>builder()
+                .success(true)
+                .code(successCode.getCode())
+                .message(successCode.getMessage())
+                .build();
     }
 
-    public T getData() {
-        if (!success) {
-            throw new IllegalStateException("Cannot get data from failed response");
-        }
-        return data;
-    }
-
-    public String getError() {
-        if (success) {
-            throw new IllegalStateException("Cannot get error from successful response");
-        }
-        return error;
+    // ERROR
+    public static ApiResponse<Void> error(String code, String message) {
+        return ApiResponse.<Void>builder()
+                .success(false)
+                .code(code)
+                .message(message)
+                .build();
     }
 }
