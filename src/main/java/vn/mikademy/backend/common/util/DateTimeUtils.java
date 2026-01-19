@@ -4,11 +4,11 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-public final class DateTimeUtil {
+public final class DateTimeUtils {
 
     private static final ZoneId UTC = ZoneId.of("UTC");
 
-    private DateTimeUtil() {}
+    private DateTimeUtils() {}
 
     public static Instant nowUtc() {
         return Instant.now();
