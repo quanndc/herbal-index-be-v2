@@ -36,5 +36,4 @@ create-gitkeep.sh
 instruction.md
 setup.sh
 folder_structure.txt
-docker-compose.yml
 .env
