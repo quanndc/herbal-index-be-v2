@@ -20,10 +20,10 @@ public class CreateHerbUseCase {
         HerbName herbName = new HerbName(name);
         HerbScientificName sciName = new HerbScientificName(scientificName);
 
-        Slug slub = new Slug(herbName.getValue());
-        if(herbRepository.existsBySlug(slub.getValue())){
+        Slug slug = new Slug(herbName.getValue());
+        if(herbRepository.existsBySlug(slug)){
             throw new BusinessException(ErrorCode.HERB_ALREADY_EXISTS,
-                    "Herb with slug " + slub.getValue() + " already exists");
+                    "Herb with slug " + slug.getValue() + " already exists");
         }
 
         Herb herb = Herb.createNew(herbName, sciName);
